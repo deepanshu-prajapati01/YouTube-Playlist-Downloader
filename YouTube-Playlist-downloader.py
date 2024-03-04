@@ -1,3 +1,5 @@
+import datetime
+
 from pytube import Playlist, YouTube
 from pytube.cli import on_progress #this module contains the built in progress bar.
 import os, re
@@ -14,16 +16,21 @@ cache = []
 cache_file_name = '.cache.txt'
 
 def main(playlist_url):
-    global cache, cache_file_name
+    global cache, cache_file_name, playlist_name
     # This part of code will be used to extract the urls from the playlist
     try:
         playlist = Playlist(playlist_url)
-        playlist_name = playlist.title
+        try:
+            playlist_name = playlist.title
+            playlist_name = re.sub(r'[^\x00-\x7f]', '', playlist_name)
+        except:
+            playlist_name = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+            print("We have changed the playlist name, because of the error in retrieveing the playlist name.")
         videos_links = []
         for links in playlist:
             videos_links.append(links)
     except Exception as err_name:
-        return err_name
+        exit(print(f"There is following error that occured.\n{err_name}.\nPlease report this error to the author."))
     
 
     #This part will be used to extract the title of the video and also download the video.
@@ -77,7 +84,7 @@ def main(playlist_url):
         print("The following error occurred during downloading the playlist:\n"
       f"{error}\n"
       "This may be due to internet.\n"
-      "You can download the video again by providing the playlist "
+      "You can download the video again by providing the playlist\n"
       "to the program to resume downloading.")
 
 
