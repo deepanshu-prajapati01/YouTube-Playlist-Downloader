@@ -9,6 +9,9 @@ If you answered yes to any of these questions, then this repo is for you!
 
 This repo contains a Python script that can download any public YouTube playlist and save it in a separate folder on your computer. The videos will be in the highest resolution available and will be arranged in the same order as they are in the playlist.
 
+
+
+
 # Benefits of using this script:
 
 * You can watch your downloaded videos anytime, anywhere, without internet connection.
@@ -22,7 +25,14 @@ This repo contains a Python script that can download any public YouTube playlist
 * You cannot detect if the playlist owner has removed any video in the future.
 * It is possible sometimes the script fails, cause of the network issues.
 
-# How to use this script:
+# Note : This repo contains 2 types of file, one for the coders and one for the non-coders
+* Python code for the coders.
+* Exe file for the non-coders:
+
+# Non-coders can download and use the exe file directly.
+
+
+# How to use this script as a coder:
 
 * Step 1: Clone this repo using the following command.
 
@@ -51,3 +61,6 @@ python YouTube-Playlist-downloader.py
 * Step 5: Enter the link of the playlist you want to download.
 
 # That's it! You are ready to go! 
+
+
+# 
