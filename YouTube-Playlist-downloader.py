@@ -1,5 +1,5 @@
 import datetime
-
+from pymsgbox import Alert
 from pytube import Playlist, YouTube
 from pytube.cli import on_progress #this module contains the built in progress bar.
 import os, re
@@ -30,7 +30,8 @@ def main(playlist_url):
         for links in playlist:
             videos_links.append(links)
     except Exception as err_name:
-        exit(print(f"There is following error that occured.\n{err_name}.\nPlease report this error to the author."))
+        exit(Alert(text = f"There is following error that occured.\n{err_name}.\nPlease report this error to the author.",
+                   title = "YouTube-Playlist-Downloader"))
     
 
     #This part will be used to extract the title of the video and also download the video.
@@ -76,16 +77,18 @@ def main(playlist_url):
                 # CODE TO ADD THE FILE NAME TO THE CACHE.
                 with open(cache_file_name, 'a') as file:
                     file.write(f"{file_number}\n")
-        print(f"Your playlist with the name \'{playlist_name}\' has been successfully downloaded.\n"
+        Alert(text = f"Your playlist with the name \'{playlist_name}\' has been successfully downloaded.\n"
               f"You can access your playlist from the desired location given below.\n"
-              f"{path_to_save_files}\\{playlist_name}")
+              f"{path_to_save_files}\\{playlist_name}",
+              title = "YouTube-Playlist-Downloader")
                       
     except Exception as error:
-        print("The following error occurred during downloading the playlist:\n"
+        Alert(text = "The following error occurred during downloading the playlist:\n"
       f"{error}\n"
       "This may be due to internet.\n"
       "You can download the video again by providing the playlist\n"
-      "to the program to resume downloading.")
+      "to the program to resume downloading.",
+      title = "YouTube-Playlist-Downloader")
 
 
 
