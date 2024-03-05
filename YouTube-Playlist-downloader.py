@@ -30,8 +30,9 @@ def main(playlist_url):
     for links in playlist:
       videos_links.append(links)
   except Exception as err_name:
-    exit(alert(text=f"There is following error that occured.\n{err_name}.\nPlease report this error to the author.",
-               title="YouTube-Playlist-Downloader"))
+    alert(text=f"There is following error that occured.\n{err_name}.\nPlease report this error to the author.",
+               title="YouTube-Playlist-Downloader")
+    exit(input("\n\n\nEnter any key to exit..."))
 
   # This part will be used to extract the title of the video and also download the video.
   os.chdir(path_to_save_files)
