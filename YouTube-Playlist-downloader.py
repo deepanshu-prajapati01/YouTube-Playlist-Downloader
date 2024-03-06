@@ -69,7 +69,10 @@ def main(playlist_url):
         try:
           video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
         except:
-          video = yt.streams.filter(only_video=True).order_by('resolution').desc().first()
+          try:
+            video = yt.streams.filter(progressive=True, only_video=True).order_by('resolution').desc().first()
+          except:
+            video = yt.streams.filter(only_video=True).order_by('resolution').desc().first()
 
         video_name = video.default_filename.title()
         video_name = remove_invalid_char(video_name)
