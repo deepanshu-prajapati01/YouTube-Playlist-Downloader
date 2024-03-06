@@ -14,6 +14,12 @@ path_to_save_files = f"{os.path.expanduser('~')}\\Videos\\{owner_folder}"
 cache = []
 cache_file_name = '.cache.txt'
 
+def remove_invalid_char(file_name):
+  file_name = re.sub(r'[^\x00-\x7f]', '', file_name)
+  file_name = re.sub(r'&', '', file_name)
+  file_name = re.sub(r"|", '', file_name)
+
+  return file_name
 
 def main(playlist_url):
   global cache, cache_file_name, playlist_name
@@ -59,8 +65,15 @@ def main(playlist_url):
 
       if str(file_number) not in cache:
         yt = YouTube(video_link, on_progress_callback=on_progress)
-        video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
-        video_name = re.sub(r'[^\x00-\x7f]', '', video.default_filename.title())
+
+        try:
+          video = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
+        except:
+          video = yt.streams.filter(only_video=True).order_by('resolution').desc().first()
+
+        video_name = video.default_filename.title()
+        video_name = remove_invalid_char(video_name)
+
         if os.path.exists(video_name):
           # This is almost 0.0001% case that this part of the code will come to play cause there is no chance.
           # But in case there is a file with the same name, the file will be replaced.
@@ -68,10 +81,9 @@ def main(playlist_url):
 
         # CODE TO DOWNLOAD THE VIDEO
         print(f"Downloading video {file_number + 1} - {video_name}")
-        video.download()
+        video.download(filename=f"{file_number + 1}. {video_name}")
 
         # CODE TO RENAME THE FILE IN SUCH A WAY, SO THAT THE USER KNOW THE ORDER OF THE FILE.
-        os.rename(video_name, f"{file_number + 1}. {video_name}")
 
         # CODE TO ADD THE FILE NAME TO THE CACHE.
         with open(cache_file_name, 'a') as file:
