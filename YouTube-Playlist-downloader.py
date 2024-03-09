@@ -26,7 +26,6 @@ def remove_invalid_char(file_name):
   file_name = re.sub(r"$", '', file_name)
   file_name = re.sub(r"%", '', file_name)
   file_name = re.sub(r"^", '', file_name)
-  file_name = re.sub(r"&", '', file_name)
 
   return file_name
 
@@ -36,8 +35,7 @@ def main(playlist_url):
   try:
     playlist = Playlist(playlist_url)
     try:
-      playlist_name = playlist.title
-      playlist_name = re.sub(r'[^\x00-\x7f]', '', playlist_name)
+      playlist_name = remove_invalid_char(playlist.title)
     except:
       playlist_name = datetime.datetime.now().strftime("%Y-%m-%d_%H%M%S")
       print("We have changed the playlist name, because of the error in retrieveing the playlist name.")
