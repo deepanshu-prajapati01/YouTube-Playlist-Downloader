@@ -18,6 +18,15 @@ def remove_invalid_char(file_name):
   file_name = re.sub(r'[^\x00-\x7f]', '', file_name)
   file_name = re.sub(r'&', '', file_name)
   file_name = re.sub(r"|", '', file_name)
+  file_name = re.sub(r":", '', file_name)
+  file_name = re.sub(r",", '', file_name)
+  file_name = re.sub(r"`", '', file_name)
+  file_name = re.sub(r"~", '', file_name)
+  file_name = re.sub(r"@", '', file_name)
+  file_name = re.sub(r"$", '', file_name)
+  file_name = re.sub(r"%", '', file_name)
+  file_name = re.sub(r"^", '', file_name)
+  file_name = re.sub(r"&", '', file_name)
 
   return file_name
 
